@@ -8,7 +8,7 @@ import { BiAlarm } from "react-icons/bi";
 
 const Todo = ({ todo, remove, checkHandler }) => {
   return (
-    <div className={`w-full mt-2 bg-gradient-to-tr from-zinc-200 ${todo.color} border shadow rounded-lg flex flex-col items-center justify-center p-3 ${todo.isCheck && "line-through opacity-40"} `} >
+    <div className={`w-full mt-2 bg-gradient-to-tr from-zinc-200 ${todo.color} border-2 border-white rounded-lg flex flex-col items-center justify-center p-3 ${todo.isCheck && "line-through opacity-40"} `} >
       <div className="flex w-full">
         <div className="w-[10%] flex flex-col justify-start items-center">
           <div className="w-7 h-7 bg-blue-500 flex items-center justify-center rounded-md">

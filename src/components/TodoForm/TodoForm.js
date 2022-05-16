@@ -4,11 +4,12 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { BiAlarm } from "react-icons/bi";
 import { BiX } from "react-icons/bi";
 import { BiLeftArrowAlt } from "react-icons/bi";
+import DatePicker from "react-datepicker";
 
 const TodoForm = ({ addToTodo, inShow }) => {
   const [color, setColor] = useState("to-purple-500")
   const [input, setInput] = useState("")
-  const [date, setDate] = useState("")
+  const [date, setDate] = useState()
   const [time, setTime] = useState("")
   const [type, setType] = useState("Work")
 
@@ -18,18 +19,6 @@ const TodoForm = ({ addToTodo, inShow }) => {
 
   const textHandler = (e) => {
     setInput(e.target.value)
-  }
-
-  const dateHandler = (e) => {
-    setDate(e.target.value)
-  }
-
-  const timeHandler = (e) => {
-    setTime(e.target.value)
-  }
-
-  const typeHandler = (e) => {
-    setType(e.target.textContent)
   }
 
   const submitHandler = (e) => {
@@ -53,7 +42,7 @@ const TodoForm = ({ addToTodo, inShow }) => {
   }
 
   return (
-    <div ref={inShow} className="z-10 w-[100vw] h-full p-4 pt-0 hidden top-0 right-0 bg-white ">
+    <div ref={inShow} className="z-10 w-[100vw] h-[150vh] p-4 pt-0 hidden top-0 right-0 bg-white ">
       <div className="border-b-2 sticky top-0 w-full py-3 bg-white flex justify-between items-center">
         <div className="w-1/3 flex items-center">
         </div>
@@ -86,25 +75,26 @@ const TodoForm = ({ addToTodo, inShow }) => {
         <div className=" relative flex flex-col items-end py-2 mt-2 border-b-2 w-full">
           <AiOutlineCalendar className="absolute right-0 top-1/2 w-6 h-6 text-slate-400" />
           <span className="font-sans text-slate-800 text-md mb-2 ">Deadline</span>
-          <input value={date} onChange={dateHandler} className="w-full text-bold text-lg text-left outline-none" type={"date"} />
+          {/*<DatePicker className="text-left" selected={date} onChange={(date) => console.log(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear())} />*/}
+          <input value={date} onChange={(e) => setDate(e.target.value)} className="text-left w-1/3 text-bold text-lg text-left outline-none" type={"date"} />
         </div>
         <div className=" relative flex flex-col items-end py-2 mt-2 border-b-2 w-full">
           <BiAlarm className="absolute right-0 top-1/2 w-6 h-6 text-slate-400" />
           <span className="font-sans text-slate-800 text-md mb-2 ">Time</span>
-          <input value={time} onChange={timeHandler} className="w-full text-bold text-lg text-left outline-none" type={"time"} />
+          <input value={time} onChange={(e) => setTime(e.target.value)} className="text-left w-1/3 text-bold text-lg outline-none" type={"time"} />
         </div>
         <div className="flex flex-col items-end py-4 border-b-2 w-full">
           <span className="font-sans text-slate-700 text-md mb-4">Task Type</span>
           <div className="flex items-center flex-wrap gap-y-2">
-            <span onClick={typeHandler} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Home" && "bg-zinc-800 text-white"}`} >Home</span>
-            <span onClick={typeHandler} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "School" && "bg-zinc-800 text-white"}`} >School</span>
-            <span onClick={typeHandler} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Work" && "bg-zinc-800 text-white"}`} >Work</span>
-            <span onClick={typeHandler} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Activity" && "bg-zinc-800 text-white"}`} >Activity</span>
-            <span onClick={typeHandler} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Lifestyle" && "bg-zinc-800 text-white"}`} >Lifestyle</span>
-            <span onClick={typeHandler} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "EveryDay" && "bg-zinc-800 text-white"}`} >EveryDay</span>
+            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Home" && "bg-zinc-800 text-white"}`} >Home</span>
+            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "School" && "bg-zinc-800 text-white"}`} >School</span>
+            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Work" && "bg-zinc-800 text-white"}`} >Work</span>
+            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Activity" && "bg-zinc-800 text-white"}`} >Activity</span>
+            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Lifestyle" && "bg-zinc-800 text-white"}`} >Lifestyle</span>
+            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "EveryDay" && "bg-zinc-800 text-white"}`} >EveryDay</span>
           </div>
         </div>
-        <button type="submit" className="bg-zinc-800 my-4 text-white rounded-full py-2 w-full ">Save Task</button>
+        <button type="submit" className="bg-zinc-800 my-8 text-white rounded-full py-4 w-full ">Save Task</button>
       </form>
     </div>
   );
