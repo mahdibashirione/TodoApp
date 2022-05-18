@@ -5,10 +5,12 @@ import { AiOutlineCalendar } from "react-icons/ai";
 import { ImCheckboxUnchecked } from "react-icons/im";
 import { ImCheckboxChecked } from "react-icons/im";
 import { BiAlarm } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 const Todo = ({ todo, remove, checkHandler }) => {
+  const [t, i18n] = useTranslation()
   return (
-    <div className={`w-full mt-2 bg-gradient-to-tr from-zinc-200 ${todo.color} border-2 border-white rounded-lg flex flex-col items-center justify-center p-3 ${todo.isCheck && "line-through opacity-40"} `} >
+    <div className={`w-full bg-gradient-to-tr from-zinc-200 ${todo.color} border-2 border-white rounded-lg flex flex-col items-center justify-center p-3 ${todo.isCheck && "line-through opacity-40"} `} >
       <div className="flex w-full">
         <div className="w-[10%] flex flex-col justify-start items-center">
           <div className="w-7 h-7 bg-blue-500 flex items-center justify-center rounded-md">
@@ -23,7 +25,7 @@ const Todo = ({ todo, remove, checkHandler }) => {
         </div>
         <div className="w-[90%] flex flex-col">
           <div className="w-full flex justify-end overflow-x-scroll">
-            <span className="border border-white text-white px-3 py-1 rounded-full select-none text-sm font-sans mr-2">{todo.type}</span>
+            <span className="border border-white text-white px-3 py-1 rounded-full select-none text-sm font-sans mr-2">{t(todo.type)}</span>
           </div>
           <div className="flex flex-col items-end overflow-hidden w-full">
             <p className="select-none w-full truncate text-lg my-4 text-left">{todo.text}</p>

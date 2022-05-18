@@ -5,8 +5,10 @@ import { BiAlarm } from "react-icons/bi";
 import { BiX } from "react-icons/bi";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import DatePicker from "react-datepicker";
+import { useTranslation } from "react-i18next";
 
 const TodoForm = ({ addToTodo, inShow }) => {
+  const [t, i18n] = useTranslation()
   const [color, setColor] = useState("to-purple-500")
   const [input, setInput] = useState("")
   const [date, setDate] = useState()
@@ -42,7 +44,7 @@ const TodoForm = ({ addToTodo, inShow }) => {
   }
 
   return (
-    <div ref={inShow} className="z-10 w-[100vw] h-[150vh] p-4 pt-0 hidden top-0 right-0 bg-white ">
+    <div ref={inShow} className="overflow-y-auto z-20 w-[100vw] h-[115vh] p-4 pt-0 hidden top-0 right-0 bg-white ">
       <div className="border-b-2 sticky top-0 w-full py-3 bg-white flex justify-between items-center">
         <div className="w-1/3 flex items-center">
         </div>
@@ -86,15 +88,15 @@ const TodoForm = ({ addToTodo, inShow }) => {
         <div className="flex flex-col items-end py-4 border-b-2 w-full">
           <span className="font-sans text-slate-700 text-md mb-4">Task Type</span>
           <div className="flex items-center flex-wrap gap-y-2">
-            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Home" && "bg-zinc-800 text-white"}`} >Home</span>
-            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "School" && "bg-zinc-800 text-white"}`} >School</span>
-            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Work" && "bg-zinc-800 text-white"}`} >Work</span>
-            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Activity" && "bg-zinc-800 text-white"}`} >Activity</span>
-            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Lifestyle" && "bg-zinc-800 text-white"}`} >Lifestyle</span>
-            <span onClick={(e) => setType(e.target.textContent)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "EveryDay" && "bg-zinc-800 text-white"}`} >EveryDay</span>
+            <span onClick={(e) => setType(e.target.dataset.value)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Home" && "bg-zinc-800 text-white"}`} data-value="Home"  >{t("Home")}</span>
+            <span onClick={(e) => setType(e.target.dataset.value)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "School" && "bg-zinc-800 text-white"}`} data-value="School"  >{t("School")}</span>
+            <span onClick={(e) => setType(e.target.dataset.value)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Work" && "bg-zinc-800 text-white"}`} data-value="Work"  >{t("Work")}</span>
+            <span onClick={(e) => setType(e.target.dataset.value)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Activity" && "bg-zinc-800 text-white"}`} data-value="Activity"  >{t("Activity")}</span>
+            <span onClick={(e) => setType(e.target.dataset.value)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "Lifestyle" && "bg-zinc-800 text-white"}`} data-value="Lifestyle"  >{t("Lifestyle")}</span>
+            <span onClick={(e) => setType(e.target.dataset.value)} className={`select-none checked:text-red-500 cursor-pointer flex items-center justify-center border border-slate-800 rounded-full mr-2 px-4 py-1 ${type === "EveryDay" && "bg-zinc-800 text-white"}`} data-value="EveryDay"  >{t("EveryDay")}</span>
           </div>
         </div>
-        <button type="submit" className="bg-zinc-800 my-8 text-white rounded-full py-4 w-full ">Save Task</button>
+        <button type="submit" className="bg-zinc-800 mt-8  mb-20 text-white rounded-full py-4 w-full ">Save Task</button>
       </form>
     </div>
   );

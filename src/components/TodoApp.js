@@ -3,22 +3,43 @@ import { useState } from "react";
 import TodoForm from "./TodoForm/TodoForm";
 import TodoList from "./TodoList/TodoList";
 import { BiFolderPlus } from "react-icons/bi";
-import { BiMenuAltLeft } from "react-icons/bi";
-import { BiMessageError } from "react-icons/bi";
+
 import Search from "./Search/Search";
 import { useEffect } from "react";
+import FilterType from "./FilterType/FilterType";
+import { confirm } from "react-confirm-box";
+import Navbar from "./Navbar/Navbar";
+
+import { useTranslation } from "react-i18next";
+
 
 const TodoApp = () => {
+  const [t, i18n] = useTranslation()
   const [todo, setTodo] = useState([])
   const [filterTodo, setFilterTodo] = useState([])
-  const [check, setCheck] = useState({ value: '', label: "All" })
+  const [filterType, setFilterType] = useState("")
+  const [check, setCheck] = useState({ value: '', label: t("All") })
   const [search, setSearch] = useState('')
 
   const formTask = useRef()
 
   useEffect(() => {
     filterCompleted(check)
-  }, [todo, check, search])
+    if (filterType) {
+      filterCompleted(check)
+    }
+
+    if (todo.length) {
+      localStorage.setItem("todoLocal", JSON.stringify(todo))
+    }
+  }, [todo, check, search, filterType])
+
+  useEffect(() => {
+    const itemLocal = JSON.parse(localStorage.getItem("todoLocal"))
+    if (itemLocal) {
+      setTodo(itemLocal)
+    }
+  }, [])
 
   const searchChangeHandler = (e) => {
     setSearch(e.target.value)
@@ -34,7 +55,7 @@ const TodoApp = () => {
       text: input,
       date,
       time,
-      type,
+      type: type,
       id: Math.floor(Math.random() * 100),
       isCheck: false
     }])
@@ -42,8 +63,13 @@ const TodoApp = () => {
   }
 
   const removeHandler = (id) => {
-    const filterTodo = todo.filter(todo => todo.id !== id)
-    setTodo(filterTodo)
+    if (window.confirm("آیا میخواهید آن را حذف کنید؟")) {
+      const filterTodo = todo.filter(todo => todo.id !== id)
+      setTodo(filterTodo)
+      if (todo.length == 1) {
+        localStorage.clear("todoLocal")
+      }
+    }
   }
 
   const checkHandler = (id) => {
@@ -66,11 +92,16 @@ const TodoApp = () => {
     switch (status.value) {
       case "": {
         if (!search.length) {
-          setFilterTodo(todo)
+          if (filterType !== "") {
+            setFilterTodo(todo.filter(t => t.type === filterType))
+          } else {
+            setFilterTodo(todo)
+          }
         } else {
           setFilterTodo(todo)
           setFilterTodo(filterTodo.filter(t => t.text.includes(search)))
         }
+
         break
       }
       case "true": {
@@ -100,27 +131,21 @@ const TodoApp = () => {
   }
 
   return (
-    <div className="w-full">
-      <div className="fixed top-0 w-full z-10 bg-white px-4 py-3 flex justify-between items-center">
-        <div>
-          <BiMessageError className="text-2xl cursor-pointer" />
-        </div>
-        <div>
-          <span className="text-bold font-sans text-xl">Task Manager</span>
-        </div>
-        <div>
-          <BiMenuAltLeft className="text-3xl cursor-pointer" />
-        </div>
-      </div>
+    <div className="w-full ">
+      <TodoForm inShow={formTask} addToTodo={addToTodo} />
+      <Navbar />
+      <Search
+        filterCompleted={filterCompleted}
+        checkHandler={checkCompletedHandler}
+        checkState={check}
+        searchState={search}
+        onChangeHandler={searchChangeHandler}
+      />
+      <FilterType
+        setType={setFilterType}
+        type={filterType}
+      />
       <div className="container">
-        <TodoForm inShow={formTask} addToTodo={addToTodo} />
-        <Search
-          filterCompleted={filterCompleted}
-          checkHandler={checkCompletedHandler}
-          checkState={check}
-          searchState={search}
-          onChangeHandler={searchChangeHandler}
-        />
         <TodoList
           todo={filterTodo}
           remove={removeHandler}

@@ -1,12 +1,14 @@
 import Select from 'react-select';
+import { useTranslation } from "react-i18next";
 
 const FilterCompleted = ({ checkHandler, checkState }) => {
 
+  const [t, i18n] = useTranslation()
 
   const options = [
-    { value: '', label: 'All' },
-    { value: 'true', label: 'Check' },
-    { value: 'false', label: 'UnCheck' },
+    { value: '', label: t('All') },
+    { value: 'true', label: t('Check') },
+    { value: 'false', label: t('UnCheck') },
   ]
 
   return (
